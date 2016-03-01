@@ -73,7 +73,7 @@ public class JSHashTable
             while (node.next != null) {
                 if (node.key.equalsIgnoreCase(k)) {
                     node.frequency++;
-                    break;
+                    return true;
                 }
                 node = node.next;
             }

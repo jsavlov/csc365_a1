@@ -41,7 +41,7 @@ public class main
             try {
                 pageThreads[q].join();
             } catch (InterruptedException ex) {
-
+                ex.printStackTrace();
             }
         }
 
