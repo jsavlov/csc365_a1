@@ -12,6 +12,7 @@ import java.io.IOException;
 public class PageDownloader implements Runnable
 {
     private final WebPage mainPage;
+    private DownloadActionListener actionListener = null;
 
     @Override
     public void run()
@@ -47,10 +48,21 @@ public class PageDownloader implements Runnable
             hashTable.add(s);
         }
 
+        if (actionListener != null) {
+            actionListener.finishedDownloadingContent(this.mainPage);
+        }
 
     }
 
+
+
     public PageDownloader(@NotNull WebPage page) {
         mainPage = page;
+    }
+
+    public PageDownloader(@NotNull WebPage page, DownloadActionListener listener)
+    {
+        this.mainPage = page;
+        this.actionListener = listener;
     }
 }

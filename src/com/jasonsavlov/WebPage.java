@@ -20,4 +20,10 @@ public class WebPage
     public String getPageURL() {
         return this.pageURL;
     }
+
+    @Override
+    public String toString()
+    {
+        return pageURL;
+    }
 }

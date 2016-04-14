@@ -1,7 +1,10 @@
 package com.jasonsavlov;
 
 
+import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by jason on 2/23/16.
@@ -22,18 +25,22 @@ public class main
             "https://en.wikipedia.org/wiki/Objective-C"
     };
 
+    public static List<WebPage> webPages;
+
     public static void main(String[] args)
     {
-        ArrayList<WebPage> webPageArray = new ArrayList<WebPage>();
+        List<WebPage> wps = new ArrayList<>();
         Thread[] pageThreads;
         for (String s : page_urls) {
             WebPage wp = new WebPage(s);
-            webPageArray.add(wp);
+            wps.add(wp);
         }
 
-        pageThreads = new Thread[webPageArray.size()];
+        webPages = Collections.unmodifiableList(wps);
+
+        pageThreads = new Thread[webPages.size()];
         for (int i = 0; i < pageThreads.length; i++) {
-            pageThreads[i] = new Thread(new PageDownloader(webPageArray.get(i)));
+            pageThreads[i] = new Thread(new PageDownloader(webPages.get(i)));
             pageThreads[i].start();
         }
 
@@ -45,6 +52,19 @@ public class main
             }
         }
 
-        System.out.println("Program complete.");
+
+        JFrame frame = new JFrame("MainWindow");
+        MainWindow mw = new MainWindow();
+        mw.setWebPageList(webPages);
+        frame.setContentPane(mw.mainPanel);
+        //frame.setContentPane(new MainWindow().mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+
+        //System.out.println("Program complete.");
     }
+
+
 }
