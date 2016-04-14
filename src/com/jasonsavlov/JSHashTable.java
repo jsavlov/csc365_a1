@@ -1,5 +1,9 @@
 package com.jasonsavlov;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * Created by jason on 2/23/16.
  */
@@ -52,6 +56,25 @@ public class JSHashTable
     {
         bucket_count = initial_buckets;
         buckets = new Node[bucket_count];
+    }
+
+    public List<String> getListOfWords() {
+        List<String> listToReturn = new ArrayList<>();
+        for (int i = 0; i < buckets.length; i++) {
+            Node workingNode = buckets[i];
+            if (workingNode == null) {
+                // There's nothing in this node, so continue to the next
+                continue;
+            }
+
+            listToReturn.add(workingNode.key);
+
+            // See if there's a chain
+            while ((workingNode = workingNode.next) != null) {
+                listToReturn.add(workingNode.key);
+            }
+        }
+        return Collections.unmodifiableList(listToReturn);
     }
 
     public int getHash(String k)
@@ -112,6 +135,28 @@ public class JSHashTable
         this.bucket_count = newSize;
 
         return newSize;
+    }
+
+    public int getFrequencyOfWord(String word) {
+        int wordHash = getHash(word);
+        Node wordNode = buckets[wordHash];
+
+        if (wordNode == null) {
+            // Word doesn't exist, return 0
+            return 0;
+        }
+
+        while (!wordNode.key.equals(word)) {
+            wordNode = wordNode.next;
+            if (wordNode.next == null) {
+                // Word isn't in the chain, return 0
+                return 0;
+            } else if (wordNode.key.equals(word)) {
+                // we found it, break
+                break;
+            }
+        }
+        return wordNode.frequency;
     }
 
 }
