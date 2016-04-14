@@ -79,7 +79,7 @@ public class JSHashTable
 
     public int getHash(String k)
     {
-        return Math.abs(k.hashCode());
+        return Math.abs(k.hashCode()) % bucket_count;
     }
 
     public boolean add(String k)
@@ -147,7 +147,7 @@ public class JSHashTable
         }
 
         while (!wordNode.key.equals(word)) {
-            wordNode = wordNode.next;
+
             if (wordNode.next == null) {
                 // Word isn't in the chain, return 0
                 return 0;
@@ -155,6 +155,7 @@ public class JSHashTable
                 // we found it, break
                 break;
             }
+            wordNode = wordNode.next;
         }
         return wordNode.frequency;
     }
