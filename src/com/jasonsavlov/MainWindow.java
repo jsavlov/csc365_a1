@@ -14,6 +14,7 @@ public class MainWindow implements DownloadActionListener
     private JList urlList;
     private JButton beginButton;
     JPanel mainPanel;
+    private JLabel closestMatchText;
 
     private DefaultListModel<WebPage> pageListModel;
 
@@ -51,6 +52,7 @@ public class MainWindow implements DownloadActionListener
         PageDownloader downloader = new PageDownloader(new WebPage(url), this);
         Thread urlDownloadThread = new Thread(downloader);
         urlDownloadThread.start();
+        this.closestMatchText.setText("Downloading page source...");
     }
 
     @Override
@@ -60,6 +62,7 @@ public class MainWindow implements DownloadActionListener
 
         CosineSimilarityCalculatorEngine engine = new CosineSimilarityCalculatorEngine(webPageList, page, this);
         new Thread(engine).start();
+        this.closestMatchText.setText("Calculating similarity");
     }
 
     @Override
@@ -67,5 +70,6 @@ public class MainWindow implements DownloadActionListener
     {
         // test it!
         System.out.println("Most similar page: " + result.page);
+        this.closestMatchText.setText("Closest match: " + result.page);
     }
 }
