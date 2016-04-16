@@ -20,8 +20,6 @@ public class CosineSimilarityCalculation implements Callable<CosineSimilarityCal
         List<Integer> listA = new ArrayList<>(), listB = new ArrayList<>();
         List<String> wordsFromSource = sourcePage.getHashTable().getListOfWords();
 
-        wordsFromSource = sourcePage.getHashTable().getListOfWords();
-
         for (String word : wordsFromSource)
         {
             int srcWordFreq = sourcePage.getHashTable().getFrequencyOfWord(word);
