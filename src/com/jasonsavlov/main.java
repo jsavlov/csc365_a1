@@ -29,6 +29,10 @@ public class main
 
     public static void main(String[] args)
     {
+        JFrame loadingFrame = new JFrame("LoadingDialog");
+        loadingFrame.setContentPane(new LoadingDialog().panel1);
+        loadingFrame.pack();
+        loadingFrame.setVisible(true);
         List<WebPage> wps = new ArrayList<>();
         Thread[] pageThreads;
         for (String s : page_urls) {
@@ -51,6 +55,8 @@ public class main
                 ex.printStackTrace();
             }
         }
+
+        loadingFrame.setVisible(false);
 
 
         JFrame frame = new JFrame("MainWindow");
