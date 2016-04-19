@@ -52,7 +52,15 @@ public class MainWindow implements DownloadActionListener
         PageDownloader downloader = new PageDownloader(new WebPage(url), this);
         Thread urlDownloadThread = new Thread(downloader);
         urlDownloadThread.start();
-        this.closestMatchText.setText("Downloading page source...");
+        this.setStatusString("Downloading page source...");
+    }
+
+    private void setStatusString(String str)
+    {
+        synchronized (closestMatchText)
+        {
+            this.closestMatchText.setText(str);
+        }
     }
 
     @Override
@@ -62,7 +70,7 @@ public class MainWindow implements DownloadActionListener
 
         CosineSimilarityCalculatorEngine engine = new CosineSimilarityCalculatorEngine(webPageList, page, this);
         new Thread(engine).start();
-        this.closestMatchText.setText("Calculating similarity");
+        this.setStatusString("Calculating similarity");
     }
 
     @Override
@@ -70,6 +78,6 @@ public class MainWindow implements DownloadActionListener
     {
         // test it!
         System.out.println("Most similar page: " + result.page);
-        this.closestMatchText.setText("Closest match: " + result.page);
+        this.setStatusString("Closest match: " + result.page);
     }
 }
