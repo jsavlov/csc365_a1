@@ -25,9 +25,7 @@ public class MainWindow implements DownloadActionListener
     {
         pageListModel = new DefaultListModel<>();
 
-        beginButton.addActionListener((ActionEvent e) -> {
-               processURL(urlTextField.getText());
-        });
+        beginButton.addActionListener((ActionEvent e) -> processURL(urlTextField.getText()));
     }
 
     public List<WebPage> getWebPageList()
